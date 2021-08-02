@@ -21,6 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/access/block', 'BlockController@index');
 Route::get('/', 'Dashboard\HomeController@front');
 Route::get('/blog/{id}', 'Dashboard\HomeController@blog');
+Route::post('/pembelian', 'Dashboard\PembelianController@store');
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/homes/index', 'Dashboard\HomeController@index');
@@ -38,4 +39,6 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('/posts/category', 'Dashboard\CategoryController');
     Route::resource('/blog/index', 'Dashboard\BlogController');
     Route::resource('/produk/index', 'Dashboard\ProdukController');
+    Route::resource('/penjualan/data', 'Dashboard\PembelianController');
+    Route::resource('/testimoni/data', 'Dashboard\TestimoniController');
 });

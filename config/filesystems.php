@@ -82,6 +82,7 @@ return [
         public_path('storage') => storage_path('app/public'),        
         public_path('produk') => storage_path('app/produk'),
         public_path('blog') => storage_path('app/blog'),
+        public_path('testimoni') => storage_path('app/testimoni'),
     ],
 
 ];

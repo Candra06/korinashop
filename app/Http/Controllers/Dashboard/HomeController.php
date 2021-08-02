@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Produk;
 use App\User;
 use App\Quote;
+use App\Testimoni;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -23,7 +24,8 @@ class HomeController extends Controller
     {
         $produk = Produk::all();
         $blog = Blog::all();
-        return view('frontend.index', compact('produk', 'blog'));
+        $testimoni = Testimoni::all();
+        return view('frontend.index', compact('produk', 'blog', 'testimoni'));
     }
 
     public function blog($id)

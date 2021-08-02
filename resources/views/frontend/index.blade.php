@@ -51,12 +51,13 @@
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="#hero">Beranda</a></li>
-                    <li><a class="nav-link scrollto" href="#about">Tentang</a></li>
-                    <li><a class="nav-link scrollto" href="#portfolio">Produk</a></li>
-                    <li><a class="nav-link scrollto" href="#recent-blog-posts">Blog</a></li>
-                    <li><a class="nav-link scrollto" href="#contact">Kontak</a></li>
-                    <li><a class="getstarted scrollto" href="#pemesanan">Pembelian</a></li>
+                    <li><a class="nav-link scrollto active" href="{{ url('/') }}#hero">Beranda</a></li>
+                    <li><a class="nav-link scrollto" href="{{ url('/') }}#about">Tentang</a></li>
+                    <li><a class="nav-link scrollto" href="{{ url('/') }}#portfolio">Produk</a></li>
+                    <li><a class="nav-link scrollto" href="{{ url('/') }}#recent-blog-posts">Blog</a></li>
+                    <li><a class="nav-link scrollto" href="{{ url('/') }}#contact">Kontak</a></li>
+                    <li><a class="nav-link scrollto" href="{{ url('/') }}#testimonials">Testimoni</a></li>
+                    <li><a class="getstarted scrollto" href="{{ url('/') }}#pemesanan">Pembelian</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -87,13 +88,17 @@
 
             <div class="container" data-aos="fade-up">
                 <header class="section-header">
-                    <h2>Tentang</h2>
+                    <h2>ABOUT OUR PRODUCT</h2>
                 </header>
                 <div class="row gx-0">
 
-                    <div class="col-lg-12 d-flex flex-column justify-content-center" data-aos="fade-up"
+                    <div class="col-lg-12 d-flex flex-column justify-items-center" data-aos="fade-up"
                         data-aos-delay="200">
-                        <div class="content">
+                        <div class="content ">
+                            <div class="d-flex justify-content-center">
+
+                                <img src="{{ asset('assets/img/logo.png')}}" class="text-center" style="height: 200px" alt="">
+                            </div>
 
                             <p>
                                 KORINA merupakan local brand yang dirintis oleh tim PKM-K Universitas Jember untuk
@@ -129,7 +134,7 @@
 
                 <header class="section-header">
                     <h2>Produk</h2>
-                    <p>Varian Produk Kami</p>
+                    <p>Varian Produk</p>
                 </header>
 
 
@@ -172,7 +177,7 @@
 
                 <header class="section-header">
                     <h2>Blog</h2>
-                    <p>Recent posts form our Blog</p>
+                    <p>Blog</p>
                 </header>
 
                 <div class="row">
@@ -180,13 +185,13 @@
                     @foreach ($blog as $m)
                         <div class="col-lg-4">
                             <div class="post-box">
-                                <div class="post-img"><img
-                                        src="{{ asset($m->foto) }}" class="img-fluid"
-                                        alt=""></div>
+                                <div class="post-img"><img src="{{ asset($m->foto) }}" class="img-fluid" alt="">
+                                </div>
                                 <span class="post-date">Tue, September 15</span>
-                                <h3 class="post-title">{{$m->judul}}
+                                <h3 class="post-title">{{ $m->judul }}
                                 </h3>
-                                <a href="{{url('/blog/'.$m->id)}}" class="readmore stretched-link mt-auto"><span>Read
+                                <a href="{{ url('/blog/' . $m->id) }}"
+                                    class="readmore stretched-link mt-auto"><span>Read
                                         More</span><i class="bi bi-arrow-right"></i></a>
                             </div>
                         </div>
@@ -206,46 +211,71 @@
                 </header>
                 <div class="row gy-4">
                     <div class="col-lg-12">
-                        <form action="forms/contact.php" method="post" class="php-email-form">
+
+                        @if (session('sukses'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('sukses') }}
+
+                            </div>
+                            <div class="alert alert-warning">
+                                <p>Silahkan melakukan pembayaran melalui bank <strong>BRI- Rrekening Atas nama</strong>
+                                </p>
+                                <p>Pengiriman akan dikirim menggukan <strong>JNE</strong></p>
+                            </div>
+                        @endif
+                        @if (session('gagal'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ session('gagal') }}
+
+                            </div>
+                        @endif
+                        <form action="{{ url('/pembelian') }}" method="post">
+                            @csrf
                             <div class="row gy-4">
 
                                 <div class="col-md-4">
-                                    <input type="text" name="name" class="form-control" placeholder="Nama Lengkap"
+                                    <input type="text" name="nama_pembeli" class="form-control"
+                                        placeholder="Nama Lengkap" required>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <input type="email" class="form-control" name="email_pembeli" placeholder="Email"
                                         required>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <input type="email" class="form-control" name="email" placeholder="Email" required>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <input type="email" class="form-control" name="phone"
+                                    <input type="text" class="form-control" name="telepon_pembeli"
                                         placeholder="Nomor Handphone/WA" required>
                                 </div>
 
-                                <div class="col-md-12">
-                                    <select name="produk" class="form-control" id="">
+                                <div class="col-md-6">
+                                    <select name="id_produk" class="form-control" id="">
                                         <option value="">Pilih Produk</option>
+                                        @foreach ($produk as $item)
+                                            <option value="{{ $item->id }}">
+                                                {{ $item->nama . ' (Rp.' . $item->harga . ')' }}</option>
+                                        @endforeach
                                     </select>
-
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" name="jumlah"
+                                        placeholder="Jumlah Pembelian" required>
                                 </div>
 
                                 <div class="col-md-12">
-                                    <textarea class="form-control" name="alamat" rows="3" placeholder="Alamat"
+                                    <textarea class="form-control" name="alamat_pembeli" rows="3" placeholder="Alamat"
                                         required></textarea>
                                 </div>
 
                                 <div class="col-md-12">
-                                    <textarea class="form-control" name="message" rows="3"
+                                    <textarea class="form-control" name="catatan" rows="3"
                                         placeholder="Catatan (Opsional)" required></textarea>
                                 </div>
 
                                 <div class="col-md-12 text-center">
-                                    <div class="loading">Loading</div>
-                                    <div class="error-message"></div>
-                                    <div class="sent-message">Your message has been sent. Thank you!</div>
 
-                                    <button type="submit">Pesan</button>
+
+                                    <button type="submit" class="btn btn-md btn-primary">Pesan</button>
                                 </div>
 
                             </div>
@@ -255,6 +285,52 @@
                 </div>
             </div>
         </section>
+
+        <section id="testimonials" class="testimonials">
+
+            <div class="container" data-aos="fade-up">
+
+                <header class="section-header">
+                    <h2>Testimonials</h2>
+                    <p>What they are saying about us</p>
+                </header>
+
+                <div class="testimonials-slider swiper-container" data-aos="fade-up" data-aos-delay="100">
+                    <div class="swiper-wrapper">
+                        @foreach ($testimoni as $m)
+                            @if ($m->tipe == 'video')
+                                <div class="swiper-slide">
+                                    <div class="testimonial-item">
+                                        <video width="100%" autoplay>
+                                            <source src="{{ asset($m->file) }}" type="video/mp4">
+
+                                        </video>
+
+                                    </div>
+                                </div>
+                            @else
+                                <div class="swiper-slide">
+                                    <div class="testimonial-item">
+                                        <img src="{{ asset($m->file)}}"
+                                            alt="" srcset="">
+                                    </div>
+                                </div>
+                            @endif
+
+                        @endforeach
+                        <!-- End testimonial item -->
+
+                        <!-- End testimonial item -->
+
+
+
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+
+            </div>
+
+        </section><!-- End Testimonials Section -->
 
         <!-- ======= Contact Section ======= -->
         <section id="contact" class="contact">
@@ -305,9 +381,6 @@
                                 </a>
                             </div>
                         </div>
-
-
-
                     </div>
 
                     <div class="col-md-6">
@@ -420,9 +493,7 @@
     <!-- Vendor JS Files -->
     <script src="{{ url('/') }}/assets/frontend/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="{{ url('/') }}/assets/frontend/vendor/aos/aos.js"></script>
-    <script src="{{ url('/') }}/assets/frontend/vendor/php-email-form/validate.js"></script>
     <script src="{{ url('/') }}/assets/frontend/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="{{ url('/') }}/assets/frontend/vendor/purecounter/purecounter.js"></script>
     <script src="{{ url('/') }}/assets/frontend/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="{{ url('/') }}/assets/frontend/vendor/glightbox/js/glightbox.min.js"></script>
 

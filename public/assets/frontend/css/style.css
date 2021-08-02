@@ -191,6 +191,7 @@ section {
   font-weight: 700;
   letter-spacing: 1px;
   color: #012970;
+  text-shadow: 3px 3px 3px #fff;
   font-family: "Nunito", sans-serif;
   margin-top: 3px;
 }
@@ -1299,11 +1300,10 @@ section {
 --------------------------------------------------------------*/
 .testimonials .testimonial-item {
   box-sizing: content-box;
-  padding: 30px;
+  padding: 10px;
   margin: 40px 30px;
   box-shadow: 0px 0 20px rgba(1, 41, 112, 0.1);
   background: #fff;
-  min-height: 320px;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -2296,6 +2296,7 @@ section {
   font-weight: 700;
   letter-spacing: 1px;
   color: #012970;
+  text-shadow: 3px 3px 3px #fff;
   font-family: "Nunito", sans-serif;
   margin-top: 3px;
 }
