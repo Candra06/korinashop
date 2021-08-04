@@ -107,8 +107,13 @@ class TestimoniController extends Controller
      * @param  \App\Testimoni  $testimoni
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Testimoni $testimoni)
+    public function destroy( $id)
     {
-        //
+        try {
+            Testimoni::where('id', $id)->delete();
+            return redirect('/dashboard/testimoni/data')->with('status', 'Berhasil menghapus data');
+        } catch (\Throwable $th) {
+            return redirect('/dashboard/testimoni/data')->with('status', 'Gagal menghapus data');
+        }
     }
 }

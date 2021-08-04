@@ -71,9 +71,11 @@ class BlogController extends Controller
      * @param  \App\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function edit(Blog $blog)
+    public function edit($id)
     {
-        //
+        $data = Blog::where('id', $id)->first();
+        // return $data;
+        return view('dashboard.blog.edit', compact('data'));
     }
 
     /**
@@ -83,9 +85,23 @@ class BlogController extends Controller
      * @param  \App\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Blog $blog)
+    public function update(Request $request, $id)
     {
-        //
+        if ($request['foto']) {
+            $fileType = $request->file('foto')->extension();
+            $name = Str::random(8) . '.' . $fileType;
+            $input['foto'] = Storage::putFileAs('blog', $request->file('foto'), $name);;
+        }
+        $input['judul'] = $request['judul'];
+        $input['status'] = $request['status'];
+        $input['konten'] = $request['konten'];
+        try {
+            Blog::where('id', $id)->update($input);
+            return redirect('/dashboard/blog/index')->with('status', 'Berhasil mengubah data');
+        } catch (\Throwable $th) {
+            
+            return redirect('/dashboard/blog/index/'.$id.'/edit')->with('status', 'Gagal mengubah data');
+        }
     }
 
     /**
@@ -94,8 +110,13 @@ class BlogController extends Controller
      * @param  \App\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Blog $blog)
+    public function destroy($id)
     {
-        //
+        try {
+            Blog::where('id', $id)->delete();
+            return redirect('/dashboard/blog/index')->with('status', 'Berhasil menghapus data');
+        } catch (\Throwable $th) {
+            return redirect('/dashboard/blog/index')->with('status', 'Gagal mengubah data');
+        }
     }
 }
