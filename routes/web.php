@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -22,6 +23,9 @@ Route::get('/access/block', 'BlockController@index');
 Route::get('/', 'Dashboard\HomeController@front');
 Route::get('/blog/{id}', 'Dashboard\HomeController@blog');
 Route::post('/pembelian', 'Dashboard\PembelianController@store');
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
+});
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/homes/index', 'Dashboard\HomeController@index');

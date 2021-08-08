@@ -97,7 +97,8 @@
                         <div class="content ">
                             <div class="d-flex justify-content-center">
 
-                                <img src="{{ asset('assets/img/logo.png')}}" class="text-center" style="height: 200px" alt="">
+                                <img src="{{ asset('assets/img/logo.png') }}" class="text-center"
+                                    style="height: 200px" alt="">
                             </div>
 
                             <p>
@@ -133,8 +134,8 @@
             <div class="container" data-aos="fade-up">
 
                 <header class="section-header">
-                    <h2>Produk</h2>
-                    <p>Varian Produk</p>
+                    <h2>Product</h2>
+                    <p>Product Variant</p>
                 </header>
 
 
@@ -207,21 +208,21 @@
         <section id="pemesanan" class="contact">
             <div class="container" data-aos="fade-up">
                 <header class="section-header">
-                    <p>Pembelian</p>
+                    <p>Shop</p>
                 </header>
                 <div class="row gy-4">
                     <div class="col-lg-12">
-
+                        
                         @if (session('sukses'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('sukses') }}
-
+                                <p>Informasi :</p>
+                                <p>1. Harap melakukan konfirmasi melalui whatsapp Kompres Korina– 085850049091.</p>
+                                <p>2. Setelah melakukan konfirmasi, anda akan mendapatkan nomer rekening.</p>
+                                <p>3. Kemudian harap melakukan pembayaran melalui bank BRI- a.n. Nuril Azizah.</p>
+                                <p>4. Anda dapat memilih pengiriminan melalui JNE atau J&T.</p>
                             </div>
-                            <div class="alert alert-warning">
-                                <p>Silahkan melakukan pembayaran melalui bank <strong>BRI- Rrekening Atas nama</strong>
-                                </p>
-                                <p>Pengiriman akan dikirim menggukan <strong>JNE</strong></p>
-                            </div>
+                           
                         @endif
                         @if (session('gagal'))
                             <div class="alert alert-danger" role="alert">
@@ -271,7 +272,10 @@
                                     <textarea class="form-control" name="catatan" rows="3"
                                         placeholder="Catatan (Opsional)" required></textarea>
                                 </div>
-
+                                <div class="col-md-12">
+                                    <p><i style="color: red">*</i><i> Infromasi tambahan : Pembelian satu box akan
+                                            mendapatkan diskon, dengan hanya membayar Rp 50.000)</i></p>
+                                </div>
                                 <div class="col-md-12 text-center">
 
 
@@ -311,8 +315,7 @@
                             @else
                                 <div class="swiper-slide">
                                     <div class="testimonial-item">
-                                        <img src="{{ asset($m->file)}}"
-                                            alt="" srcset="">
+                                        <img src="{{ asset($m->file) }}" alt="" srcset="">
                                     </div>
                                 </div>
                             @endif
@@ -340,6 +343,7 @@
                 <header class="section-header">
 
                     <p>Contact Us</p>
+                    <h6>Untuk informasi lebih lanjut dapat mengunjungi</h6>
                 </header>
 
                 <div class="row gy-4">
