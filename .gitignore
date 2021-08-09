@@ -1,1 +1,5 @@
 vendor
+.env
+public/produk
+public/testimoni
+public/blog
