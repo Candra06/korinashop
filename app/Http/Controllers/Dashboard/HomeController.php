@@ -16,7 +16,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = User::whereNotIn('id', [1])->where('role_id', 3)->count();
-        return nl2br(shell_exec('cd ../../ && ls -a'));
+        // return nl2br(shell_exec('cd ../../ && ls -a'));
 
         return view('dashboard.home.index', compact('user'));
     }
